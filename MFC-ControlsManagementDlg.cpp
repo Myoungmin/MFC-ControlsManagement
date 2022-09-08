@@ -19,6 +19,7 @@
 
 CMFCControlsManagementDlg::CMFCControlsManagementDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MFCCONTROLSMANAGEMENT_DIALOG, pParent)
+	, m_enableDisableVal(FALSE)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -26,11 +27,14 @@ CMFCControlsManagementDlg::CMFCControlsManagementDlg(CWnd* pParent /*=nullptr*/)
 void CMFCControlsManagementDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EDIT1, m_myEditControl);
+	DDX_Check(pDX, IDC_CHECK1, m_enableDisableVal);
 }
 
 BEGIN_MESSAGE_MAP(CMFCControlsManagementDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_CHECK1, &CMFCControlsManagementDlg::OnBnClickedCheck1)
 END_MESSAGE_MAP()
 
 
@@ -86,3 +90,13 @@ HCURSOR CMFCControlsManagementDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CMFCControlsManagementDlg::OnBnClickedCheck1()
+{
+	UpdateData(TRUE);
+	if (m_enableDisableVal)
+		m_myEditControl.EnableWindow(TRUE);
+	else
+		m_myEditControl.EnableWindow(FALSE);
+}

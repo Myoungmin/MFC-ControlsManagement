@@ -30,4 +30,8 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	BOOL m_enableDisableVal;
+	CEdit m_myEditControl;
+	afx_msg void OnBnClickedCheck1();
 };
