@@ -187,6 +187,7 @@
     <ClInclude Include="MFC-ControlsManagement.h" />
     <ClInclude Include="MFC-ControlsManagementDlg.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="RadioButtonDialog.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -199,6 +200,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="RadioButtonDialog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MFCControlsManagement.rc" />

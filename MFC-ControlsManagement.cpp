@@ -6,6 +6,7 @@
 #include "framework.h"
 #include "MFC-ControlsManagement.h"
 #include "MFC-ControlsManagementDlg.h"
+#include "RadioButtonDialog.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -56,7 +57,7 @@ BOOL CMFCControlsManagementApp::InitInstance()
 	// such as the name of your company or organization
 	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 
-	CMFCControlsManagementDlg dlg;
+	CRadioButtonDialog dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
 	if (nResponse == IDOK)
