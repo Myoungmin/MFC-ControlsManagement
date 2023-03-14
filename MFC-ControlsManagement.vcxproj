@@ -184,6 +184,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="ListControlDialog.h" />
     <ClInclude Include="MFC-ControlsManagement.h" />
     <ClInclude Include="MFC-ControlsManagementDlg.h" />
     <ClInclude Include="pch.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ListControlDialog.cpp" />
     <ClCompile Include="MFC-ControlsManagement.cpp" />
     <ClCompile Include="MFC-ControlsManagementDlg.cpp" />
     <ClCompile Include="pch.cpp">
