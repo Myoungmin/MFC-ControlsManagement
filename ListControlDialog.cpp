@@ -29,13 +29,15 @@ END_MESSAGE_MAP()
 
 void CListControlDialog::OnBnClickedLoadButton()
 {
-	// TODO: Add your control notification handler code here
+	CListCtrl* pListCtrl = (CListCtrl*)GetDlgItem(IDC_LIST_CONTROL);
+	ReadFileToListControlData(_T("myfile.data"), pListCtrl);
 }
 
 
 void CListControlDialog::OnBnClickedSaveButton()
 {
-	// TODO: Add your control notification handler code here
+	CListCtrl* pListCtrl = (CListCtrl*)GetDlgItem(IDC_LIST_CONTROL);
+	WriteListControlDataToFile(pListCtrl, _T("myfile.data"));
 }
 
 
@@ -82,4 +84,90 @@ BOOL CListControlDialog::OnInitDialog()
 	}
 
 	return TRUE;
+}
+
+void CListControlDialog::ReadFileToListControlData(LPCTSTR lpszFileName, CListCtrl* pListCtrl)
+{
+	// Open the file for reading
+	CStdioFile file;
+	if (file.Open(lpszFileName, CFile::modeRead))
+	{
+		CString strLine;
+		int nItemIndex = 0;
+
+		// Read each line from the file
+		while (file.ReadString(strLine))
+		{
+			TRACE(_T("Read line: %s\n"), strLine);
+
+			// Split the line into columns using the tab delimiter
+			CStringArray arrColumns;
+			int nTokenIndex = 0;
+			int nTokenCount = 0;
+			CString strDelimiter = _T("\t");
+			CString strToken = strLine.Tokenize(strDelimiter, nTokenIndex);
+			while (!strToken.IsEmpty())
+			{
+				arrColumns.Add(strToken);
+				strToken = strLine.Tokenize(strDelimiter, nTokenIndex);
+				nTokenCount++;
+			}
+
+			// Add a new item to the List Control and populate the columns with data
+			pListCtrl->InsertItem(nItemIndex, arrColumns[0]);
+			for (int i = 1; i < nTokenCount; i++)
+			{
+				pListCtrl->SetItemText(nItemIndex, i, arrColumns[i]);
+			}
+
+			nItemIndex++;
+		}
+
+		file.Close();
+	}
+}
+
+void CListControlDialog::WriteListControlDataToFile(CListCtrl* pListCtrl, LPCTSTR lpszFileName)
+{
+	/* 아래와 같은 코드로 하니까 위에 함수랑 안맞는듯? */
+	/* 위 함수에서 자꾸 0만 읽었다. */
+
+	//int nItemCount = pListCtrl->GetItemCount();
+
+	//CFile file;
+	//if (file.Open(lpszFileName, CFile::modeCreate | CFile::modeWrite))
+	//{
+	//	for (int i = 0; i < nItemCount; i++)
+	//	{
+	//		CString strItemData1 = pListCtrl->GetItemText(i, 0); // Get the data from column 0
+	//		CString strItemData2 = pListCtrl->GetItemText(i, 1); // Get the data from column 1
+	//		CString strDataToWrite = strItemData1 + _T("\t") + strItemData2; // Concatenate the two strings with a tab delimiter
+	//		file.Write(strDataToWrite, strDataToWrite.GetLength() * sizeof(TCHAR));
+	//		file.Write(_T("\r\n"), 2 * sizeof(TCHAR)); // Add a newline after each item
+	//	}
+
+	//	file.Close();
+	//}
+
+	int nItemCount = pListCtrl->GetItemCount();
+
+	CStdioFile file;
+	if (file.Open(lpszFileName, CFile::modeCreate | CFile::modeWrite | CFile::typeText))
+	{
+		for (int i = 0; i < nItemCount; i++)
+		{
+			CString strDataToWrite;
+			for (int j = 0; j < pListCtrl->GetHeaderCtrl()->GetItemCount(); j++)
+			{
+				strDataToWrite += pListCtrl->GetItemText(i, j);
+				if (j < pListCtrl->GetHeaderCtrl()->GetItemCount() - 1)
+				{
+					strDataToWrite += _T("\t");
+				}
+			}
+			file.WriteString(strDataToWrite + _T("\n"));
+		}
+
+		file.Close();
+	}
 }

@@ -20,4 +20,8 @@ public:
 	afx_msg void OnBnClickedLoadButton();
 	afx_msg void OnBnClickedSaveButton();
 	virtual BOOL OnInitDialog();
+
+private:
+	void ReadFileToListControlData(LPCTSTR lpszFileName, CListCtrl* pListCtrl);
+	void WriteListControlDataToFile(CListCtrl* pListCtrl, LPCTSTR lpszFileName);
 };
