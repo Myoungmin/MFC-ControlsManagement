@@ -16,4 +16,8 @@ public:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedLoadButton();
+	afx_msg void OnBnClickedSaveButton();
+	virtual BOOL OnInitDialog();
 };
